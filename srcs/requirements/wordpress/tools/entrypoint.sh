@@ -1,48 +1,28 @@
 #!/bin/bash
-set -e
 
-DB_PASS=$(cat /run/secrets/db_password)
-WP_PASS=$(cat /run/secrets/credentials)
+WP_PATH="/var/www/html"
+CONFIG_FILE="$WP_PATH/wp-config.php"
+SAMPLE_FILE="$WP_PATH/wp-config-sample.php"
 
-if [ ! -f /usr/local/bin/wp ]; then
-    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-    chmod +x wp-cli.phar
-    mv wp-cli.phar /usr/local/bin/wp
+if [ ! -f "$CONFIG_FILE" ]; then
+
+    if [ ! -f "$SAMPLE_FILE" ]; then
+        curl -O https://wordpress.org/latest.tar.gz
+        tar -xzf latest.tar.gz
+        cp -r wordpress/* $WP_PATH/
+        rm -rf wordpress latest.tar.gz
+    fi
+
+    cp "$SAMPLE_FILE" "$CONFIG_FILE"
+
+
+    sed -i "s|database_name_here|${MYSQL_DATABASE}|g" "$CONFIG_FILE"
+    sed -i "s|username_here|${MYSQL_USER}|g" "$CONFIG_FILE"
+    sed -i "s|password_here|${DB_PASSWORD}|g" "$CONFIG_FILE"
+    sed -i "s|localhost|mariadb:3306|g" "$CONFIG_FILE"
+    
 fi
 
-cd /var/www/html
-
-if [ ! -f wp-config.php ]; then
-
-    wp core download --allow-root --locale=en_US
-
-    wp config create \
-        --dbname="${MYSQL_DATABASE}" \
-        --dbuser="${MYSQL_USER}" \
-        --dbpass="${DB_PASS}" \
-        --dbhost="mariadb:3306" \
-        --allow-root
-
-    until wp db check --allow-root 2>/dev/null; do
-        sleep 2
-    done
-
-    wp core install \
-        --url="https://${DOMAIN_NAME}" \
-        --title="Inception" \
-        --admin_user="superadmin" \
-        --admin_password="${WP_PASS}" \
-        --admin_email="admin@${DOMAIN_NAME}" \
-        --skip-email \
-        --allow-root
-
-    wp user create editor "editor@${DOMAIN_NAME}" \
-        --role=editor \
-        --user_pass="Editor@2024!" \
-        --allow-root
-
-fi
-
-chown -R www-data:www-data /var/www/html
+mkdir -p /run/php
 
 exec php-fpm7.4 -F

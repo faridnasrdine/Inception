@@ -1,5 +1,3 @@
-version: '3.8'
-
 secrets:
   db_password:
     file: ../secrets/db_password.txt
@@ -14,17 +12,7 @@ networks:
 
 volumes:
   wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/${USER}/data/wordpress
   db_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/${USER}/data/mariadb
 
 services:
 
@@ -33,7 +21,7 @@ services:
     container_name: mariadb
     image: mariadb
     volumes:
-      - db_data:/var/lib/mysql
+      - /home/nafarid/data/db_data:/var/lib/mysql
     secrets:
       - db_password
       - db_root_password
@@ -47,13 +35,26 @@ services:
     container_name: wordpress
     image: wordpress
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/nafarid/data/wordpress_data:/var/www/html
     secrets:
       - db_password
       - credentials
     env_file: .env
-    networks:
+    networks :
       - inception
     restart: unless-stopped
     depends_on:
       - mariadb
+  nginx:
+    build: ./requirements/nginx
+    container_name: nginx
+    image: nginx
+    ports:
+      - "443:443"
+    volumes:
+      - /home/nafarid/data/wordpress_data:/var/www/html
+    networks:
+      - inception
+    restart: unless-stopped
+    depends_on:
+      - wordpress

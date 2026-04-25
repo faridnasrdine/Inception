@@ -1,34 +1,31 @@
 #!/bin/bash
 set -e
 
-DB_PASS=$(cat /run/secrets/db_password)
-DB_ROOT=$(cat /run/secrets/db_root_password)
-
+# DB_PASSWORD=$(cat /run/secrets/db_password)
+# DB_PASSWORD=$(cat /run/secrets/DB_PASSWORD)
 
 mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql
 
 if [ ! -d "/var/lib/mysql/mysql" ]; then
+    mariadb-install-db --user=mysql --datadir=/var/lib/mysql > /dev/null
+fi
 
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+mysqld_safe --user=mysql --skip-networking --socket=/run/mysqld/mysqld.sock &
 
-    mysqld --user=mysql --bootstrap << EOF
-DELETE FROM mysql.user WHERE User='';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1');
+sleep 5 
 
-CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE}
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_general_ci;
-
-CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${DB_PASS}';
-GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
-
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT}';
-
+mariadb --socket=/run/mysqld/mysqld.sock -u root -p"${DB_PASSWORD}" << EOF
+CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${DB_PASSWORD}';
+GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_PASSWORD}';
 FLUSH PRIVILEGES;
 EOF
 
-fi
 
-exec mysqld --user=mysql
+
+mysqladmin --socket=/run/mysqld/mysqld.sock -u root -p"${DB_PASSWORD}" shutdown
+
+exec mysqld_safe --user=mysql
