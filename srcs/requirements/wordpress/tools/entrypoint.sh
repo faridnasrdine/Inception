@@ -21,6 +21,10 @@ if [ ! -f "$CONFIG_FILE" ]; then
     sed -i "s|password_here|${DB_PASSWORD}|g" "$CONFIG_FILE"
     sed -i "s|localhost|mariadb:3306|g" "$CONFIG_FILE"
     
+    wp config set WP_REDIS_HOST redis --allow-root
+    wp config set WP_REDIS_PORT 6379 --raw --allow-root
+    wp plugin install redis-cache --activate --allow-root
+    wp redis enable --allow-root
 fi
 
 mkdir -p /run/php

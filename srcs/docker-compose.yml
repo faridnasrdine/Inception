@@ -58,3 +58,10 @@ services:
     restart: unless-stopped
     depends_on:
       - wordpress
+  redis:
+    build: ./requirements/bonus/redis
+    container_name: redis
+    image: redis
+    networks:
+      - inception
+    restart: unless-stopped
