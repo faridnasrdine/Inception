@@ -56,7 +56,7 @@ wp core install \
         --allow-root \
         --activate \
         --path='/var/www/html'
-
+        
 mkdir -p /run/php
 
 exec php-fpm8.2 -F
