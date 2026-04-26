@@ -27,7 +27,6 @@ if [ ! -f "$CONFIG_FILE" ]; then
     sed -i "s|localhost|mariadb:3306|g" "$CONFIG_FILE"
     
     until wp db check --allow-root --path="$WP_PATH" 2>/dev/null; do
-        echo ">>> انتظار..."
         sleep 1
     done
 
@@ -57,7 +56,7 @@ wp core install \
         --allow-root \
         --activate \
         --path='/var/www/html'
-        
+
 mkdir -p /run/php
 
 exec php-fpm8.2 -F
