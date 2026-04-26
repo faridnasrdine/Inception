@@ -56,6 +56,8 @@ wp core install \
         --allow-root \
         --activate \
         --path='/var/www/html'
+    wp redis enable \
+        --allow-root
         
 mkdir -p /run/php
 
