@@ -93,3 +93,12 @@ services:
     restart: unless-stopped
     depends_on:
       - mariadb
+  website:
+    build: ./requirements/bonus/website
+    container_name: website
+    image: website
+    ports:
+      - "8888:80"
+    networks:
+      - inception
+    restart: unless-stopped
