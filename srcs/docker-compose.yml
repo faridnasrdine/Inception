@@ -93,12 +93,17 @@ services:
     restart: unless-stopped
     depends_on:
       - mariadb
-  website:
-    build: ./requirements/bonus/website
-    container_name: website
-    image: website
+  netdata:
+    build: ./requirements/bonus/netdata
+    container_name: netdata
+    image: netdata
+    hostname: ${DOMAIN_NAME}
     ports:
-      - "8888:80"
+      - "19999:19999"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - inception
     restart: unless-stopped
