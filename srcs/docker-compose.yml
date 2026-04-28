@@ -107,3 +107,12 @@ services:
     networks:
       - inception
     restart: unless-stopped
+  website:
+    build: ./requirements/bonus/website
+    container_name: website
+    image: website
+    ports:
+      - "8888:80"
+    networks:
+      - inception
+    restart: unless-stopped

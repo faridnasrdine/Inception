@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nasr-Eddine Farid — Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #0e0e0e;
+      --paper:  #f5f0e8;
+      --cream:  #ede8dc;
+      --rust:   #c1440e;
+      --muted:  #6b6456;
+      --line:   #cec8ba;
+      --serif:  'Playfair Display', Georgia, serif;
+      --mono:   'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* ── Layout ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+      animation: fadeUp .8s ease both;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .tagline {
+      margin-top: 1.4rem;
+      max-width: 480px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .header-nav {
+      margin-top: 2.2rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .header-nav a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .header-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--rust);
+      transition: width .3s ease;
+    }
+    .header-nav a:hover::after { width: 100%; }
+
+    /* ── Sections ── */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--line);
+      animation: fadeUp .8s ease both;
+    }
+    section:nth-child(2)  { animation-delay: .1s; }
+    section:nth-child(3)  { animation-delay: .2s; }
+    section:nth-child(4)  { animation-delay: .3s; }
+    section:nth-child(5)  { animation-delay: .4s; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: .8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      max-width: 120px;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── About ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    @media (max-width: 580px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-text p + p { margin-top: 1rem; }
+    .about-text p { color: var(--muted); }
+
+    .about-facts { }
+
+    .fact-item {
+      display: flex;
+      justify-content: space-between;
+      padding: .55rem 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .fact-item:last-child { border-bottom: none; }
+    .fact-key { color: var(--muted); }
+    .fact-val { font-weight: 400; text-align: right; }
+
+    /* ── Skills ── */
+    .skills-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: .5rem;
+    }
+
+    .tag {
+      background: var(--cream);
+      border: 1px solid var(--line);
+      padding: .3rem .85rem;
+      font-size: 11px;
+      letter-spacing: .05em;
+      border-radius: 2px;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .tag:hover {
+      background: var(--rust);
+      color: var(--paper);
+      border-color: var(--rust);
+    }
+
+    /* ── Projects ── */
+    .projects-list { display: flex; flex-direction: column; gap: 1.8rem; }
+
+    .project-card {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 3px;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(14,14,14,.08);
+    }
+
+    .project-num {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-style: italic;
+      color: var(--line);
+      line-height: 1;
+      padding-top: .1rem;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      margin-bottom: .3rem;
+    }
+
+    .project-desc { color: var(--muted); font-size: 12px; margin-bottom: .8rem; }
+
+    .project-tags { display: flex; gap: .4rem; flex-wrap: wrap; }
+
+    .project-tag {
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--rust);
+      border: 1px solid var(--rust);
+      padding: .15rem .55rem;
+      border-radius: 2px;
+      opacity: .7;
+    }
+
+    /* ── Experience ── */
+    .exp-list { display: flex; flex-direction: column; gap: 2rem; }
+
+    .exp-item { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; }
+    @media (max-width: 560px) { .exp-item { grid-template-columns: 1fr; gap: .4rem; } }
+
+    .exp-date { color: var(--muted); font-size: 11px; padding-top: .25rem; }
+
+    .exp-role {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      margin-bottom: .2rem;
+    }
+
+    .exp-company { color: var(--rust); font-size: 12px; margin-bottom: .5rem; }
+    .exp-desc { color: var(--muted); font-size: 12px; }
+
+    /* ── Contact ── */
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.4rem;
+      margin-top: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-size: 12px;
+      padding: .55rem 1.2rem;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .contact-link:hover {
+      background: var(--rust);
+      border-color: var(--rust);
+      color: var(--paper);
+    }
+    .contact-link svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- HEADER -->
+    <header>
+      <p class="eyebrow">Portfolio — 2026</p>
+      <h1>Nasr-Eddine  <em>Farid</em></h1>
+      <p class="tagline">Software Engineer & Cybersecurity Specialist passionate about building secure, high-performance systems, with a strong focus on low-level programming, network security, and clean, elegant code.</p>
+      <nav class="header-nav">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <p class="section-label">01 — About</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <h2>Building things that <em>last</em>.</h2>
+          <p>I m a student at 1337, part of the 42 Network—a peer-to-peer, project-based school—focused on mastering C, C++, and systems programming while growing through collaborative problem-solving.</p>
+          <p>I believe secure systems are built with intention: they anticipate failure, resist misuse, and remain clear and maintainable for those who come after.</p>
+        </div>
+        <div class="about-facts">
+          <div class="fact-item"><span class="fact-key">Location</span><span class="fact-val">Rabat, MA</span></div>
+          <div class="fact-item"><span class="fact-key">Focus</span><span class="fact-val">Web / Systems</span></div>
+          <div class="fact-item"><span class="fact-key">Education</span><span class="fact-val">1337 Coding school</span></div>
+          <div class="fact-item"><span class="fact-key">Available</span><span class="fact-val">Freelance &amp; Full-time</span></div>
+          <div class="fact-item"><span class="fact-key">Languages</span><span class="fact-val">EN · FR · AR</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-label">02 — Skills</p>
+      <h2>Tools of the trade</h2>
+      <div class="skills-wrap">
+        <span class="tag">C</span>
+        <span class="tag">C++</span>
+        <span class="tag">Python</span>
+        <span class="tag">HTML &amp; CSS</span>
+        <span class="tag">React</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Git</span>
+        <span class="tag">Linux / Bash</span>
+        <span class="tag">WebSockets</span>
+        <span class="tag">Nginx</span>
+        <span class="tag">Make / CMake</span>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <p class="section-label">03 — Projects</p>
+      <h2>Selected work</h2>
+      <div class="projects-list">
+
+
+        <div class="project-card">
+          <div class="project-num">01</div>
+          <div>
+            <div class="project-title">minishell</div>
+            <p class="project-desc">A POSIX-compliant shell interpreter written in C. Implements pipes, redirections, environment variables, and built-in commands from scratch.</p>
+            <div class="project-tags">
+              <span class="project-tag">C</span>
+              <span class="project-tag">POSIX</span>
+              <span class="project-tag">Parsing</span>
+              <span class="project-tag">Unix</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-num">02</div>
+          <div>
+            <div class="project-title">inception</div>
+            <p class="project-desc">Docker-based infrastructure project deploying a WordPress stack (Nginx · MariaDB · PHP-FPM) inside a virtual machine using only custom Dockerfiles.</p>
+            <div class="project-tags">
+              <span class="project-tag">Docker</span>
+              <span class="project-tag">Nginx</span>
+              <span class="project-tag">MariaDB</span>
+              <span class="project-tag">WordPress</span>
+              <span class="project-tag">DevOps</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <p class="section-label">04 — Experience</p>
+      <h2>Where I've worked</h2>
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <span class="exp-date">2024 — present</span>
+          <div>
+            <div class="exp-role">Student Developer</div>
+            <div class="exp-company">1337 Coding school — Rabat</div>
+            <p class="exp-desc">Peer-to-peer engineering school. Built 30+ projects spanning systems programming, networking, algorithms, and full-stack web development with no teachers—only code review.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <p class="section-label">05 — Contact</p>
+      <h2>Let's talk</h2>
+      <p style="color:var(--muted); max-width:420px; margin-bottom:1.4rem; font-size:12px;">
+        Open to internships, freelance work, and interesting collaborations. I reply within 24 hours.
+      </p>
+      <div class="contact-row">
+        <a class="contact-link" href="mailto:Nasr-Eddine .nasrdinefarid@gmail.com">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Nasr-Eddine .nasrdinefarid@gmail.com
+        </a>
+        <a class="contact-link" href="https://github.com/faridnasrdine" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/nasr-eddine-farid" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452H17.21v-5.569c0-1.328-.024-3.037-1.851-3.037-1.851 0-2.135 1.445-2.135 2.939v5.667H9.987V9h3.112v1.561h.044c.434-.823 1.492-1.691 3.072-1.691 3.286 0 3.892 2.163 3.892 4.977v6.605zM5.337 7.433a1.805 1.805 0 110-3.61 1.805 1.805 0 010 3.61zM6.953 20.452H3.721V9h3.232v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>© 2026 Nasr-Eddine  Farid</span>
+      <span>Built with HTML &amp; CSS — no frameworks</span>
+    </footer>
+
+  </div>
+</body>
+</html>
