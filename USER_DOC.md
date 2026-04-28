@@ -61,6 +61,8 @@ https://nafarid.42.fr/wp-admin
 ### Adminer (Database UI)
 ```
 http://nafarid.42.fr:8080
+https://nafarid.42.fr/adminer
+
 ```
 - **Server:** mariadb
 - **Username:** wp_user
