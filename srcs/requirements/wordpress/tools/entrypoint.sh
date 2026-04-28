@@ -5,9 +5,7 @@ CONFIG_FILE="$WP_PATH/wp-config.php"
 SAMPLE_FILE="$WP_PATH/wp-config-sample.php"
 DB_PASSWORD=$(cat /run/secrets/db_password)
 ADMIN_PWS=$(cat /run/secrets/db_root_password)
-WP_USER="user2"
-WP_USER_PASSWORD="hello1"
-WP_USER_EMAIL="hello123@gmail.com"
+
 
 if [ ! -f "$CONFIG_FILE" ]; then
 

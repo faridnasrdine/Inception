@@ -7,12 +7,22 @@ secrets:
     file: ../secrets/credentials.txt
 
 networks:
-  inception:
+  docker-network:
     driver: bridge
 
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nafarid/data/wordpress_data
   db_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/nafarid/data/db_data
 
 services:
 
@@ -21,13 +31,13 @@ services:
     container_name: mariadb
     image: mariadb
     volumes:
-      - /home/nafarid/data/db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql
     secrets:
       - db_password
       - db_root_password
     env_file: .env
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
 
   wordpress:
@@ -35,17 +45,18 @@ services:
     container_name: wordpress
     image: wordpress
     volumes:
-      - /home/nafarid/data/wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
     secrets:
       - db_password
       - db_root_password
       - credentials
     env_file: .env
-    networks :
-      - inception
+    networks:
+      - docker-network
     restart: unless-stopped
     depends_on:
       - mariadb
+
   nginx:
     build: ./requirements/nginx
     container_name: nginx
@@ -53,19 +64,21 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /home/nafarid/data/wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
     depends_on:
       - wordpress
+
   redis:
     build: ./requirements/bonus/redis
     container_name: redis
     image: redis
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
+
   ftp:
     build: ./requirements/bonus/ftp
     container_name: ftp
@@ -74,14 +87,15 @@ services:
       - "21:21"
       - "21000-21010:21000-21010"
     volumes:
-      - /home/nafarid/data/wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html
     secrets:
       - credentials
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
     depends_on:
       - wordpress
+
   adminer:
     build: ./requirements/bonus/adminer
     container_name: adminer
@@ -89,10 +103,11 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
     depends_on:
       - mariadb
+
   netdata:
     build: ./requirements/bonus/netdata
     container_name: netdata
@@ -105,8 +120,9 @@ services:
       - /sys:/host/sys:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
+
   website:
     build: ./requirements/bonus/website
     container_name: website
@@ -114,5 +130,5 @@ services:
     ports:
       - "8888:80"
     networks:
-      - inception
+      - docker-network
     restart: unless-stopped
