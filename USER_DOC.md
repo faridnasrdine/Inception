@@ -1,13 +1,13 @@
 # User Documentation — Inception Project
 
-## 🐳 What is this project?
+## What is this project?
 
 Inception is a Docker-based web infrastructure running multiple services together.
 All services are containerized and communicate through a private Docker network.
 
 ---
 
-## 🌐 Available Services
+## Available Services
 
 | Service | URL | Description |
 |---|---|---|
@@ -19,7 +19,7 @@ All services are containerized and communicate through a private Docker network.
 
 ---
 
-## 🚀 Start and Stop the Project
+## Start and Stop the Project
 
 ### Start
 ```bash
@@ -43,7 +43,7 @@ make re
 
 ---
 
-## 🌍 Access the Website
+## Access the Website
 
 ### WordPress Site
 ```
@@ -71,7 +71,7 @@ https://nafarid.42.fr/adminer
 
 ---
 
-## 🔐 Credentials
+##  Credentials
 
 All credentials are stored in the `secrets/` folder:
 
@@ -81,11 +81,11 @@ All credentials are stored in the `secrets/` folder:
 | `secrets/db_password.txt` | Database user password |
 | `secrets/db_root_password.txt` | Database root password |
 
-> ⚠️ Never share or commit these files to Git.
+>  Never share or commit these files to Git.
 
 ---
 
-## ✅ Check Services are Running
+##  Check Services are Running
 
 ```bash
 # Check all containers
@@ -115,7 +115,7 @@ docker logs mariadb
 
 ---
 
-## 🔄 Common Issues
+## Common Issues
 
 | Problem | Solution |
 |---|---|

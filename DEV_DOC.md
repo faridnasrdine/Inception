@@ -1,6 +1,6 @@
 # Developer Documentation — Inception Project
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before starting, make sure you have:
 
@@ -19,7 +19,7 @@ make --version
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 inception/
@@ -54,7 +54,7 @@ inception/
 
 ---
 
-## ⚙️ Setup from Scratch
+## Setup from Scratch
 
 ### Step 1 — Clone the repository
 ```bash
@@ -97,7 +97,7 @@ mkdir -p ~/data/portainer
 
 ---
 
-## 🔨 Build and Launch
+## Build and Launch
 
 ### Using Makefile (recommended)
 ```bash
@@ -121,7 +121,7 @@ docker compose -f srcs/docker-compose.yml down -v
 
 ---
 
-## 🛠️ Managing Containers
+## Managing Containers
 
 ### View all containers
 ```bash
@@ -162,7 +162,7 @@ docker compose -f srcs/docker-compose.yml up -d --build nginx
 
 ---
 
-## 💾 Data Storage
+## Data Storage
 
 All persistent data is stored on the host machine:
 
@@ -187,7 +187,7 @@ tar -czf wordpress_backup.tar.gz ~/data/wordpress_data/
 
 ---
 
-## 🔍 Useful Debug Commands
+## Useful Debug Commands
 
 ```bash
 # Check network
@@ -214,7 +214,7 @@ docker exec -it nginx nginx -t
 
 ---
 
-## 🔐 Security Notes
+## Security Notes
 
 - All passwords are stored as **Docker secrets** in `/run/secrets/` inside containers
 - Never put passwords in `Dockerfile` or `.env`

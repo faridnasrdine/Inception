@@ -2,7 +2,7 @@
 
 ---
 
-# 🐳 Inception
+# Inception
 
 ## Description
 
