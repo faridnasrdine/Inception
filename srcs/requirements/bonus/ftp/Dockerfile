@@ -1,13 +1,13 @@
-FROM debian:bookworm
+ FROM debian:bookworm
 
-RUN apt-get update -o Acquire::Check-Valid-Until=false && \
-    apt-get install -y vsftpd && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y vsftpd iproute2
 
 COPY conf/vsftpd.conf /etc/vsftpd.conf
-COPY tools/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
-EXPOSE 21 21000-21010
+COPY tools/entrypoint.sh /tools/entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN chmod +x /tools/entrypoint.sh
+
+RUN mkdir -p /var/run/vsftpd/empty
+
+ENTRYPOINT [ "/tools/entrypoint.sh" ] 

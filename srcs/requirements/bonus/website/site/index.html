@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="darkreader-lock" />
   <title>Nasr-Eddine Farid — Developer</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
@@ -10,12 +11,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --ink:    #0e0e0e;
-      --paper:  #f5f0e8;
-      --cream:  #ede8dc;
-      --rust:   #c1440e;
-      --muted:  #6b6456;
-      --line:   #cec8ba;
+      --ink:    #ffffff;
+      --paper:  #e8f1fb;
+      --cream:  #3a7fbf;
+      --rust:   #ffd166;
+      --muted:  #c8dff5;
+      --line:   #5599cc;
+      --bg:     rgb(67, 145, 222);
       --serif:  'Playfair Display', Georgia, serif;
       --mono:   'DM Mono', 'Courier New', monospace;
     }
@@ -23,7 +25,7 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--paper);
+      background-color: rgb(67, 145, 222) !important;
       color: var(--ink);
       font-family: var(--mono);
       font-size: 14px;
@@ -69,6 +71,7 @@
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -.02em;
+      color: var(--ink);
     }
 
     h1 em {
@@ -148,6 +151,11 @@
       font-weight: 400;
       line-height: 1.2;
       margin-bottom: 1.2rem;
+      color: var(--ink);
+    }
+
+    h2 em {
+      color: var(--rust);
     }
 
     /* ── About ── */
@@ -162,8 +170,6 @@
     .about-text p + p { margin-top: 1rem; }
     .about-text p { color: var(--muted); }
 
-    .about-facts { }
-
     .fact-item {
       display: flex;
       justify-content: space-between;
@@ -173,7 +179,7 @@
     }
     .fact-item:last-child { border-bottom: none; }
     .fact-key { color: var(--muted); }
-    .fact-val { font-weight: 400; text-align: right; }
+    .fact-val { font-weight: 400; text-align: right; color: var(--ink); }
 
     /* ── Skills ── */
     .skills-wrap {
@@ -190,11 +196,12 @@
       font-size: 11px;
       letter-spacing: .05em;
       border-radius: 2px;
+      color: var(--ink);
       transition: background .2s, color .2s, border-color .2s;
     }
     .tag:hover {
       background: var(--rust);
-      color: var(--paper);
+      color: #1a1a1a;
       border-color: var(--rust);
     }
 
@@ -213,14 +220,14 @@
     }
     .project-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(14,14,14,.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
     }
 
     .project-num {
       font-family: var(--serif);
       font-size: 2.2rem;
       font-style: italic;
-      color: var(--line);
+      color: rgba(255,255,255,0.3);
       line-height: 1;
       padding-top: .1rem;
     }
@@ -229,6 +236,7 @@
       font-family: var(--serif);
       font-size: 1.15rem;
       margin-bottom: .3rem;
+      color: var(--ink);
     }
 
     .project-desc { color: var(--muted); font-size: 12px; margin-bottom: .8rem; }
@@ -242,7 +250,7 @@
       border: 1px solid var(--rust);
       padding: .15rem .55rem;
       border-radius: 2px;
-      opacity: .7;
+      opacity: .85;
     }
 
     /* ── Experience ── */
@@ -257,6 +265,7 @@
       font-family: var(--serif);
       font-size: 1.05rem;
       margin-bottom: .2rem;
+      color: var(--ink);
     }
 
     .exp-company { color: var(--rust); font-size: 12px; margin-bottom: .5rem; }
@@ -285,7 +294,7 @@
     .contact-link:hover {
       background: var(--rust);
       border-color: var(--rust);
-      color: var(--paper);
+      color: #1a1a1a;
     }
     .contact-link svg { width: 14px; height: 14px; fill: currentColor; }
 
@@ -308,7 +317,7 @@
     }
   </style>
 </head>
-<body>
+<body style="background-color: rgb(67, 145, 222) !important;">
   <div class="page">
 
     <!-- HEADER -->
@@ -331,7 +340,7 @@
       <div class="about-grid">
         <div class="about-text">
           <h2>Building things that <em>last</em>.</h2>
-          <p>I m a student at 1337, part of the 42 Network—a peer-to-peer, project-based school—focused on mastering C, C++, and systems programming while growing through collaborative problem-solving.</p>
+          <p>I'm a student at 1337, part of the 42 Network—a peer-to-peer, project-based school—focused on mastering C, C++, and systems programming while growing through collaborative problem-solving.</p>
           <p>I believe secure systems are built with intention: they anticipate failure, resist misuse, and remain clear and maintainable for those who come after.</p>
         </div>
         <div class="about-facts">
@@ -368,7 +377,6 @@
       <p class="section-label">03 — Projects</p>
       <h2>Selected work</h2>
       <div class="projects-list">
-
 
         <div class="project-card">
           <div class="project-num">01</div>
@@ -428,9 +436,9 @@
         Open to internships, freelance work, and interesting collaborations. I reply within 24 hours.
       </p>
       <div class="contact-row">
-        <a class="contact-link" href="mailto:Nasr-Eddine .nasrdinefarid@gmail.com">
+        <a class="contact-link" href="mailto:nasrdinefarid@gmail.com">
           <svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          Nasr-Eddine .nasrdinefarid@gmail.com
+          nasrdinefarid@gmail.com
         </a>
         <a class="contact-link" href="https://github.com/faridnasrdine" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.34-3.369-1.34-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
@@ -445,7 +453,7 @@
 
     <!-- FOOTER -->
     <footer>
-      <span>© 2026 Nasr-Eddine  Farid</span>
+      <span>© 2026 Nasr-Eddine Farid</span>
       <span>Built with HTML &amp; CSS — no frameworks</span>
     </footer>
 
