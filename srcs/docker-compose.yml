@@ -17,6 +17,7 @@ volumes:
       type: none
       o: bind
       device: /home/nafarid/data/wordpress_data
+
   db_data:
     driver: local
     driver_opts:
@@ -64,7 +65,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /home/nafarid/data/wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html   
     networks:
       - docker-network
     restart: unless-stopped
@@ -88,7 +89,7 @@ services:
       - "21:21"
       - "21000-21010:21000-21010"
     volumes:
-      - /home/nafarid/data/wordpress_data:/var/www/html
+      - wordpress_data:/var/www/html  
     secrets:
       - credentials
     networks:

@@ -56,7 +56,7 @@ wp core install \
         --path='/var/www/html'
     wp redis enable \
         --allow-root
-        
+chown -R www-data:www-data /var/www/html
 mkdir -p /run/php
 
 exec php-fpm8.2 -F
