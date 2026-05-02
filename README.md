@@ -54,8 +54,14 @@ nano srcs/.env
 DOMAIN_NAME=nafarid.42.fr
 MYSQL_DATABASE=wordpress
 MYSQL_USER=wp_user
-ADMIN=superadmin
-EMAIL=admin@nafarid.42.fr
+NAME_D=nafarid.42.fr
+FTP_USER=
+DB_NAME=
+DB_USER=
+ADMIN=
+EMAIL=
+WP_USER=
+WP_USER_EMAIL=
 ```
 
 **4 — Add domain to `/etc/hosts`**

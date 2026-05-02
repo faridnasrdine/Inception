@@ -2,7 +2,7 @@
 
 set -e
 
-FTP_PASSWORD=$(cat /run/secrets/credentials)
+FTP_PASSWORD=$(grep ftp_pass /run/secrets/credentials | cut -d = -f2)
 
 if ! id "$FTP_USER" &>/dev/null; then 
 	useradd -m -s /bin/bash $FTP_USER

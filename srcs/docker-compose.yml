@@ -114,7 +114,7 @@ services:
     build: ./requirements/bonus/netdata
     container_name: netdata
     image: netdata
-    hostname: ${DOMAIN_NAME}
+    hostname: ${NAME_D}
     ports:
       - "19999:19999"
     volumes:
