@@ -51,17 +51,16 @@ printf 'YourROOTpassword!' > secrets/db_root_password.txt
 nano srcs/.env
 ```
 ```env
-DOMAIN_NAME=nafarid.42.fr
 MYSQL_DATABASE=wordpress
 MYSQL_USER=wp_user
 NAME_D=nafarid.42.fr
-FTP_USER=
-DB_NAME=
-DB_USER=
-ADMIN=
-EMAIL=
-WP_USER=
-WP_USER_EMAIL=
+FTP_USER=nafarid
+DB_NAME=wordpress
+DB_USER=jdsa
+ADMIN=nafarid
+EMAIL=fdafd@gmail.com
+WP_USER=user2
+WP_USER_EMAIL=hhasjdad
 ```
 
 **4 — Add domain to `/etc/hosts`**
