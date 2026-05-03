@@ -41,7 +41,7 @@ cd inception
 **2 — Create secret files**
 ```bash
 mkdir -p secrets
-printf 'YourWPpassword!'   > secrets/credentials.txt
+printf 'wp_user=password!\nftp_pass=password!'   > secrets/credentials.txt
 printf 'YourDBpassword!'   > secrets/db_password.txt
 printf 'YourROOTpassword!' > secrets/db_root_password.txt
 ```
@@ -56,11 +56,11 @@ MYSQL_USER=wp_user
 NAME_D=nafarid.42.fr
 FTP_USER=nafarid
 DB_NAME=wordpress
-DB_USER=jdsa
+DB_USER=farid
 ADMIN=nafarid
 EMAIL=fdafd@gmail.com
 WP_USER=user2
-WP_USER_EMAIL=hhasjdad
+WP_USER_EMAIL=user2@gmail.com
 ```
 
 **4 — Add domain to `/etc/hosts`**
@@ -185,3 +185,17 @@ The services included are:
 - [Docker Secrets overview](https://docs.docker.com/engine/swarm/secrets/)
 - [TLS/SSL configuration in NGINX](https://nginx.org/en/docs/http/configuring_https_servers.html)
 
+### AI Assistance
+
+**Claude (Anthropic)** was used as a debugging and learning aid throughout this project.
+
+- **Shell scripting** — Diagnosing issues in container entrypoint scripts, including
+  ownership race conditions between the FTP and WordPress containers sharing the same
+  bind mount volume.
+- **Service configuration** — Troubleshooting vsftpd socket binding errors, passive
+  mode port configuration, and user permission setup.
+- **Networking** — Debugging port conflicts between host and container processes and
+  understanding Docker bridge network behavior.
+
+AI was used strictly as a reference and debugging tool — all architectural decisions,
+configurations, and code were written and validated by the author.
